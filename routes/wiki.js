@@ -16,13 +16,7 @@ expressRouter.post('/', async(req, res, next) => {
     title: req.body.title,
     content: req.body.content
   });
-  // const page = await Page.create({
-  //   title: req.body.title,
-  //  content: req.body.content
-  // })
 
-  // make sure we only redirect *after* our save is complete!
-  // note: `.save` returns a promise.
   try {
     const result = await page.save();
     console.log(result)
