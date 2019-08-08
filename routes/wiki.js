@@ -2,11 +2,14 @@ let express = require('express');
 const expressRouter = express.Router();
 const {addPage } = require('../views')
 const wikipage = require('../views/wikipage')
+const indexpage = require('../views/index')
 const { Page } = require('../models')
 
 
 expressRouter.get('/', (req, res, next) => {
-  res.send('This is the wiki page')
+
+  const allpages = Page.findAll();
+  res.send(allpages)
 })
 expressRouter.post('/', async(req, res, next) => {
   const page = new Page({
