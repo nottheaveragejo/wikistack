@@ -4,6 +4,8 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const { db, Page, User } = require('./models');
 const path = require('path')
+const wiki = require('./routes/wiki')
+const user = require('./routes/user')
 
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended:false}))
@@ -14,19 +16,16 @@ then(() => {
   console.log('connected to the database');
 })
 
+app.use('/wiki', wiki)
 
 app.get('/', (req, res, next) => {
-  try{
-    res.send('hello there!')
-  }
-  catch(err){
-    console.error(err)
-  }
+  res.redirect('/wiki')
 })
+
 
 const PORT = 3000;
 const init = async () => {
-  await db.sync({force:true}); //drops database every time
+  await db.sync({force:false}); //drops database every time
   app.listen(PORT, ()=> {console.log(`app is running on port ${PORT}`)})
 }
 
